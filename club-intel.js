@@ -12,37 +12,36 @@ module.exports = async function runClubIntel(page) {
   // TROPHY MAP
   // ============================
   const TROPHY_MAP = {
-  // Lucky Cards (DI)
-  18: "Gold Lucky Cards (DI)",
-  17: "Silver Lucky Cards (DI)",
-  16: "Bronze Lucky Cards (DI)",
+    // Lucky Cards (DI)
+    18: "Gold Lucky Cards (DI)",
+    17: "Silver Lucky Cards (DI)",
+    16: "Bronze Lucky Cards (DI)",
 
-  // Lucky Cards ($)
-  15: "Gold Lucky Cards ($)",
-  14: "Silver Lucky Cards ($)",
-  13: "Bronze Lucky Cards ($)",
+    // Lucky Cards ($)
+    15: "Gold Lucky Cards ($)",
+    14: "Silver Lucky Cards ($)",
+    13: "Bronze Lucky Cards ($)",
 
-  // BP
-  12: "Gold BP",
-  11: "Silver BP",
-  10: "Bronze BP",
+    // BP
+    12: "Gold BP",
+    11: "Silver BP",
+    10: "Bronze BP",
 
-  // Apartment
-  9: "Gold Apartment",
-  8: "Silver Apartment",
-  7: "Bronze Apartment",
+    // Apartment
+    9: "Gold Apartment",
+    8: "Silver Apartment",
+    7: "Bronze Apartment",
 
-  // Max Energy
-  6: "Gold Max Energy",
-  5: "Silver Max Energy",
-  4: "Bronze Max Energy",
+    // Max Energy
+    6: "Gold Max Energy",
+    5: "Silver Max Energy",
+    4: "Bronze Max Energy",
 
-  // Time
-  3: "Gold Time",
-  2: "Silver Time",
-  1: "Bronze Time",
-};
-
+    // Time
+    3: "Gold Time",
+    2: "Silver Time",
+    1: "Bronze Time",
+  };
 
   // ============================
   // PHASE 1 — CLUB URL EXTRACTION
@@ -85,7 +84,6 @@ module.exports = async function runClubIntel(page) {
 
       urlsOnPage.forEach((url) => clubUrls.add(url));
       console.log(`   ➕ Found ${urlsOnPage.length} clubs`);
-
     } catch (err) {
       console.log(`❌ Error on page ${currentPage}: ${err.message}`);
     }
@@ -126,6 +124,18 @@ module.exports = async function runClubIntel(page) {
         const fame = fameEl ? fameEl.textContent.replace(/,/g, "") : null;
         const level = levelEl ? levelEl.textContent : null;
 
+        // ---- Members ----
+        let members = null;
+        const spanEls = Array.from(document.querySelectorAll("span"));
+        const membersSpan = spanEls.find(s =>
+          s.textContent.includes("Members:")
+        );
+
+        if (membersSpan) {
+          const match = membersSpan.textContent.match(/\((\d+)\)/);
+          if (match) members = match[1];
+        }
+
         // ---- Trophies ----
         const trophyEls = document.querySelectorAll(
           "#guildTrophies li.trophy"
@@ -135,7 +145,6 @@ module.exports = async function runClubIntel(page) {
 
         trophyEls.forEach((li) => {
           const classes = Array.from(li.classList);
-
           const trophyClass = classes.find((c) =>
             c.startsWith("trophy-")
           );
@@ -150,6 +159,7 @@ module.exports = async function runClubIntel(page) {
           name,
           fame,
           level,
+          members,
           trophies,
         };
       });
@@ -172,6 +182,7 @@ module.exports = async function runClubIntel(page) {
       console.log(`   📛 Name   : ${clubData.name}`);
       console.log(`   ⭐ Fame   : ${clubData.fame}`);
       console.log(`   🎚️ Level  : ${clubData.level}`);
+      console.log(`   👥 Members: ${clubData.members}`);
       console.log(`   🏅 Trophies (${trophyNames.length}):`);
       trophyNames.forEach((t) => console.log(`      • ${t}`));
 
