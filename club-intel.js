@@ -12,26 +12,37 @@ module.exports = async function runClubIntel(page) {
   // TROPHY MAP
   // ============================
   const TROPHY_MAP = {
-    15: "Gold Lucky Cards",
-    14: "Silver Lucky Cards",
-    13: "Bronze Lucky Cards",
+  // Lucky Cards (DI)
+  18: "Gold Lucky Cards (DI)",
+  17: "Silver Lucky Cards (DI)",
+  16: "Bronze Lucky Cards (DI)",
 
-    9: "Gold Apartment",
-    8: "Silver Apartment",
-    7: "Bronze Apartment",
+  // Lucky Cards ($)
+  15: "Gold Lucky Cards ($)",
+  14: "Silver Lucky Cards ($)",
+  13: "Bronze Lucky Cards ($)",
 
-    12: "Gold BP Dollars",
-    11: "Silver BP Dollars",
-    10: "Bronze BP Dollars",
+  // BP
+  12: "Gold BP",
+  11: "Silver BP",
+  10: "Bronze BP",
 
-    6: "Gold Max Energy",
-    5: "Silver Max Energy",
-    4: "Bronze Max Energy",
+  // Apartment
+  9: "Gold Apartment",
+  8: "Silver Apartment",
+  7: "Bronze Apartment",
 
-    3: "Gold Time",
-    2: "Silver Time",
-    1: "Bronze Time",
-  };
+  // Max Energy
+  6: "Gold Max Energy",
+  5: "Silver Max Energy",
+  4: "Bronze Max Energy",
+
+  // Time
+  3: "Gold Time",
+  2: "Silver Time",
+  1: "Bronze Time",
+};
+
 
   // ============================
   // PHASE 1 — CLUB URL EXTRACTION
